@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hotel Bedding — All-in-One Bedding Set</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F6F2EA;
+    --card:#FFFFFF;
+    --ink:#1D2430;
+    --body-text:#4B5160;
+    --gold:#A9824A;
+    --gold-soft:#E7DCC6;
+    --navy:#47618A;
+    --navy-dark:#374C6D;
+    --line:#E4DDCC;
+    --blue-swatch:#4B6C99;
+    --gray-swatch:#7C838C;
+    --danger:#B0473D;
+    --radius:14px;
+    --safe-top:env(safe-area-inset-top,0px);
+    --safe-bottom:env(safe-area-inset-bottom,0px);
+    box-sizing:border-box;
+  }
+  *,*::before,*::after{box-sizing:inherit;}
+  html{scroll-padding-top:var(--safe-top);}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--body-text);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    padding-top:var(--safe-top);
+    padding-bottom:calc(var(--safe-bottom) + 84px);
+    -webkit-text-size-adjust:100%;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --cream:#15171B; --card:#1D2026; --ink:#F3EFE6; --body-text:#C9CBD1;
+      --line:#2C2F36; --gold-soft:#332C1E;
+    }
+  }
+  :root[data-theme="dark"]{
+    --cream:#15171B; --card:#1D2026; --ink:#F3EFE6; --body-text:#C9CBD1;
+    --line:#2C2F36; --gold-soft:#332C1E;
+  }
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;color:var(--ink);margin:0;font-weight:500;}
+  p{margin:0;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:480px;margin:0 auto;background:var(--cream);min-height:100%;}
+
+  /* Header */
+  header.top{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 20px 14px;border-bottom:1px solid var(--line);
+  }
+  .logo{font-family:'Fraunces',Georgia,serif;font-size:22px;color:var(--ink);font-weight:600;letter-spacing:.2px;}
+  .eyebrow-pill{
+    font-size:10.5px;letter-spacing:.06em;color:var(--gold);
+    border:1px solid var(--gold-soft);padding:5px 10px;border-radius:99px;
+    white-space:nowrap;
+  }
+
+  /* Hero */
+  .hero-text{padding:26px 20px 16px;}
+  .hero-text .kicker{font-size:12px;color:var(--gold);letter-spacing:.04em;margin-bottom:10px;display:block;}
+  .hero-text h1{font-size:30px;line-height:1.28;}
+  .hero-text .sub{margin-top:10px;font-size:14.5px;line-height:1.55;color:var(--body-text);}
+  .hero-photo{width:100%;aspect-ratio:1080/870;object-fit:cover;}
+  .hero-badges{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:20px 20px;flex-wrap:wrap;gap:12px;
+  }
+  .pcs-count{font-family:'Fraunces',Georgia,serif;font-size:38px;color:var(--ink);line-height:1;}
+  .pcs-label{font-size:12.5px;color:var(--body-text);margin-top:6px;}
+  .made-badge{
+    border:1px solid var(--ink);border-radius:99px;padding:9px 16px;
+    font-size:11.5px;letter-spacing:.05em;color:var(--ink);font-weight:600;
+  }
+  .hero-list{padding:0 20px 8px;font-size:13.5px;line-height:1.9;color:var(--body-text);border-top:1px solid var(--line);padding-top:16px;margin:0 20px;}
+
+  /* Section shell */
+  section{padding:34px 20px;}
+  section.alt{background:var(--card);}
+  .section-head{text-align:left;margin-bottom:22px;}
+  .section-head .kicker{font-size:11.5px;letter-spacing:.06em;color:var(--gold);display:block;margin-bottom:8px;}
+  .section-head h2{font-size:24px;line-height:1.3;}
+  .section-head .sub{margin-top:9px;font-size:13.5px;color:var(--body-text);line-height:1.5;}
+
+  /* 5pcs grid */
+  .grid5{display:grid;grid-template-columns:1fr 1fr;gap:16px 14px;}
+  .grid5 figure{margin:0;}
+  .grid5 img{border-radius:10px;width:100%;aspect-ratio:1/1;object-fit:cover;background:var(--gold-soft);}
+  .grid5 .num{font-family:'Fraunces',Georgia,serif;color:var(--gold);font-size:16px;margin-bottom:6px;display:block;}
+  .grid5 figcaption{margin-top:10px;}
+  .grid5 .name{font-weight:600;color:var(--ink);font-size:14px;}
+  .grid5 .meta{font-size:12px;color:var(--body-text);margin-top:2px;}
+  .banner-2covers{
+    margin-top:18px;background:var(--gold-soft);border-radius:var(--radius);
+    padding:20px;display:flex;align-items:center;gap:16px;
+  }
+  .banner-2covers img{width:96px;height:96px;border-radius:8px;object-fit:cover;flex-shrink:0;}
+  .banner-2covers h3{font-size:16px;line-height:1.3;}
+  .banner-2covers p{font-size:12.5px;margin-top:6px;color:var(--body-text);}
+
+  /* usage rows */
+  .usage-row{display:flex;gap:16px;align-items:center;padding:18px 0;border-top:1px solid var(--line);}
+  .usage-row:first-child{border-top:none;padding-top:0;}
+  .usage-row img{width:112px;height:112px;border-radius:10px;object-fit:cover;flex-shrink:0;}
+  .usage-row .num{font-family:'Fraunces',Georgia,serif;color:var(--gold);font-size:13px;display:block;margin-bottom:4px;}
+  .usage-row h3{font-size:15.5px;line-height:1.35;}
+  .usage-row p{font-size:12.5px;margin-top:6px;color:var(--body-text);line-height:1.5;}
+  .usage-footer{
+    margin-top:6px;text-align:center;background:var(--gold-soft);border-radius:var(--radius);
+    padding:18px;font-size:14px;color:var(--ink);font-weight:600;
+  }
+  .usage-footer small{display:block;margin-top:6px;font-weight:400;font-size:11.5px;color:var(--body-text);}
+
+  /* color options */
+  .color-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .color-card img{border-radius:10px;width:100%;aspect-ratio:435/485;object-fit:cover;}
+  .color-name{display:flex;align-items:center;gap:8px;margin-top:10px;font-weight:600;color:var(--ink);font-size:14px;}
+  .swatch{width:14px;height:14px;border-radius:50%;display:inline-block;}
+  .swatch.blue{background:var(--blue-swatch);}
+  .swatch.gray{background:var(--gray-swatch);}
+  .color-desc{font-size:12px;color:var(--body-text);margin-top:2px;}
+  .texture-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;}
+  .texture-row img{border-radius:10px;width:100%;aspect-ratio:435/285;object-fit:cover;}
+  .color-footer{text-align:center;margin-top:18px;padding-top:16px;border-top:1px solid var(--line);}
+  .color-footer p{font-size:14px;font-weight:600;color:var(--ink);}
+  .color-footer small{display:block;margin-top:6px;font-size:11.5px;color:var(--body-text);}
+
+  /* lifestyle */
+  .lifestyle-photo{border-radius:var(--radius);width:100%;aspect-ratio:1011/590;object-fit:cover;}
+  .recommend-list{margin-top:22px;}
+  .recommend-item{display:flex;gap:14px;padding:15px 0;border-top:1px solid var(--line);align-items:flex-start;}
+  .recommend-item:first-child{border-top:none;}
+  .recommend-item .emoji{font-size:22px;line-height:1;width:28px;text-align:center;flex-shrink:0;}
+  .recommend-item h3{font-size:14.5px;}
+  .recommend-item p{font-size:12.5px;color:var(--body-text);margin-top:4px;line-height:1.5;}
+  .lifestyle-footer{text-align:center;margin-top:20px;padding-top:18px;border-top:1px solid var(--line);}
+  .lifestyle-footer .set-line{font-size:12px;color:var(--body-text);}
+  .lifestyle-footer h3{margin-top:8px;font-size:17px;}
+
+  /* product info table */
+  .info-table{width:100%;border-collapse:collapse;font-size:13px;}
+  .info-table tr{border-top:1px solid var(--line);}
+  .info-table tr:first-child{border-top:none;}
+  .info-table td{padding:11px 0;vertical-align:top;}
+  .info-table td.label{color:var(--gold);font-weight:600;width:34%;letter-spacing:.02em;font-size:11.5px;text-transform:uppercase;}
+  .info-table td.value{color:var(--ink);}
+  .care-tags{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 16px;}
+  .care-tags span{
+    background:var(--gold-soft);color:var(--ink);font-size:11.5px;padding:6px 12px;
+    border-radius:99px;font-weight:600;
+  }
+  .care-list{list-style:none;margin:0;padding:0;counter-reset:care;}
+  .care-list li{
+    counter-increment:care;padding:12px 0 12px 34px;position:relative;
+    border-top:1px solid var(--line);font-size:13px;color:var(--ink);line-height:1.5;
+  }
+  .care-list li:first-child{border-top:none;}
+  .care-list li::before{
+    content:counter(care);position:absolute;left:0;top:12px;
+    width:22px;height:22px;border-radius:50%;background:var(--gold-soft);color:var(--gold);
+    font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;
+  }
+  .care-note{
+    margin-top:16px;background:var(--gold-soft);border-radius:10px;padding:14px;
+    font-size:11.5px;color:var(--body-text);line-height:1.6;text-align:center;
+  }
+
+  /* order form */
+  #order h2{font-size:22px;}
+  .order-card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px;margin-top:18px;
+  }
+  .field-label{font-size:12.5px;font-weight:600;color:var(--ink);margin-bottom:10px;display:block;}
+  .color-select{display:flex;gap:10px;}
+  .color-opt{
+    flex:1;border:1.5px solid var(--line);border-radius:10px;padding:10px;
+    display:flex;align-items:center;gap:8px;cursor:pointer;background:transparent;
+    font-family:inherit;font-size:13px;color:var(--ink);font-weight:600;
+  }
+  .color-opt[aria-pressed="true"]{border-color:var(--navy);background:rgba(71,97,138,.08);}
+  .color-opt .dot{width:16px;height:16px;border-radius:50%;flex-shrink:0;}
+  .line-item{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 0;border-top:1px solid var(--line);
+  }
+  .order-card .color-select{margin-bottom:4px;}
+  .item-info h3{font-size:14.5px;color:var(--ink);font-weight:600;font-family:'Inter';}
+  .item-info p{font-size:12px;color:var(--body-text);margin-top:2px;}
+  .item-price{font-size:13.5px;color:var(--ink);font-weight:600;margin-top:4px;}
+  .stepper{display:flex;align-items:center;gap:0;border:1px solid var(--line);border-radius:99px;overflow:hidden;flex-shrink:0;}
+  .stepper button{
+    width:34px;height:34px;border:none;background:var(--card);color:var(--ink);
+    font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .stepper button:active{background:var(--gold-soft);}
+  .stepper .qty{width:30px;text-align:center;font-size:14px;font-weight:600;color:var(--ink);}
+
+  .form-grid{display:grid;gap:12px;margin-top:4px;}
+  .form-row label{font-size:12px;color:var(--body-text);margin-bottom:5px;display:block;}
+  .form-row input,.form-row select,.form-row textarea{
+    width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:9px;
+    font-size:14px;font-family:inherit;color:var(--ink);background:var(--cream);
+  }
+  .form-row textarea{resize:vertical;min-height:56px;}
+  .date-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+
+  .total-row{display:flex;justify-content:space-between;align-items:baseline;padding-top:16px;margin-top:8px;border-top:1.5px solid var(--ink);}
+  .total-row .label{font-size:14px;font-weight:600;color:var(--ink);}
+  .total-row .amount{font-family:'Fraunces',Georgia,serif;font-size:26px;color:var(--ink);}
+
+  #paypal-button-container{margin-top:16px;min-height:45px;}
+  .payment-pending{
+    margin-top:16px;text-align:center;padding:14px;border-radius:10px;
+    background:var(--gold-soft);color:var(--ink);font-size:12.5px;line-height:1.5;
+  }
+  .error-msg{color:var(--danger);font-size:12.5px;margin-top:10px;display:none;}
+
+  /* sticky checkout bar */
+  .checkout-bar{
+    position:fixed;left:0;right:0;bottom:0;z-index:40;
+    background:var(--card);border-top:1px solid var(--line);
+    padding:12px 20px calc(12px + var(--safe-bottom));
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+  }
+  .checkout-bar .amount{font-family:'Fraunces',Georgia,serif;font-size:20px;color:var(--ink);}
+  .checkout-bar .amount small{font-family:'Inter';font-size:11px;color:var(--body-text);display:block;font-weight:400;}
+  .checkout-bar button{
+    background:var(--navy);color:#fff;border:none;border-radius:99px;
+    padding:13px 22px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .checkout-bar button:active{background:var(--navy-dark);}
+
+  footer.site{padding:30px 20px 20px;text-align:center;}
+  .admin-link{font-size:11px;color:var(--body-text);background:none;border:none;text-decoration:underline;cursor:pointer;font-family:inherit;}
+
+  /* admin modal */
+  .modal-backdrop{
+    position:fixed;inset:0;background:rgba(20,20,20,.5);z-index:60;
+    display:none;align-items:flex-end;justify-content:center;
+  }
+  .modal-backdrop.open{display:flex;}
+  .modal{
+    background:var(--card);width:100%;max-width:480px;border-radius:16px 16px 0 0;
+    padding:22px 20px calc(22px + var(--safe-bottom));max-height:80vh;overflow-y:auto;
+  }
+  .modal h3{font-size:17px;margin-bottom:14px;}
+  .modal .form-row{margin-bottom:10px;}
+  .modal-actions{display:flex;gap:10px;margin-top:16px;}
+  .modal-actions button{
+    flex:1;padding:12px;border-radius:9px;border:1px solid var(--line);
+    background:var(--cream);font-family:inherit;font-size:13.5px;font-weight:600;cursor:pointer;color:var(--ink);
+  }
+  .modal-actions button.primary{background:var(--navy);color:#fff;border-color:var(--navy);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <span class="logo">Hotel Bedding</span>
+    <span class="eyebrow-pill">ALL-IN-ONE SET</span>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero-text">
+    <span class="kicker">ALL-IN-ONE BEDDING SET</span>
+    <h1>Start your life in Korea with bedding, sorted in one go.</h1>
+    <p class="sub">A four-season single bedding set for studios, dorms, and short stays.</p>
+  </div>
+  <img class="hero-photo" src="images/hero.jpg" alt="Hotel Bedding comforter and pillow set on a bed">
+  <div class="hero-badges">
+    <div>
+      <div class="pcs-count">5PCS</div>
+      <div class="pcs-label">Everything you need, in one set</div>
+    </div>
+    <span class="made-badge">MADE IN KOREA</span>
+  </div>
+  <p class="hero-list">Reversible comforter ×1 · Banded quilted pad ×1<br>Pillow insert ×1 · Pillow covers ×2</p>
+
+  <!-- 5PCS COMPOSITION -->
+  <section id="composition">
+    <div class="section-head">
+      <h2>Only what you need — all 5 pieces.</h2>
+      <p class="sub">From the comforter to a spare pillow cover, it's all in one set.</p>
+    </div>
+    <div class="grid5">
+      <figure>
+        <span class="num">01</span>
+        <img src="images/comforter.jpg" alt="Four-season reversible comforter">
+        <figcaption>
+          <div class="name">Four-Season Comforter</div>
+          <div class="meta">Super Single · ×1</div>
+        </figcaption>
+      </figure>
+      <figure>
+        <span class="num">02</span>
+        <img src="images/pad.jpg" alt="Banded quilted mattress pad">
+        <figcaption>
+          <div class="name">Banded Quilted Pad</div>
+          <div class="meta">Elastic-strap fit · ×1</div>
+        </figcaption>
+      </figure>
+      <figure>
+        <span class="num">03</span>
+        <img src="images/pillow-insert.jpg" alt="Pillow insert">
+        <figcaption>
+          <div class="name">Pillow Insert</div>
+          <div class="meta">40 × 60cm · ×1</div>
+        </figcaption>
+      </figure>
+      <figure>
+        <span class="num">04</span>
+        <img src="images/pillow-covers.jpg" alt="Pillow covers, set of two">
+        <figcaption>
+          <div class="name">Pillow Covers</div>
+          <div class="meta">40 × 60cm · ×2</div>
+        </figcaption>
+      </figure>
+    </div>
+    <div class="banner-2covers">
+      <img src="images/folded-set.jpg" alt="Folded bedding set">
+      <div>
+        <h3>Two pillow covers, so you're never without one.</h3>
+        <p>Wash one while you sleep on the other.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- USAGE / FABRIC -->
+  <section class="alt" id="usage">
+    <div class="section-head">
+      <h2>Bedding you'll use every day, made practical.</h2>
+      <p class="sub">Everyday comfort, built in.</p>
+    </div>
+    <div class="usage-row">
+      <img src="images/usage-1.jpg" alt="Comforter used directly on the bed">
+      <div>
+        <span class="num">01</span>
+        <h3>No cover needed — just the comforter</h3>
+        <p>A reversible comforter you use straight away — no separate duvet cover required.</p>
+      </div>
+    </div>
+    <div class="usage-row">
+      <img src="images/usage-2.jpg" alt="Quilted pad strapped to a mattress corner">
+      <div>
+        <span class="num">02</span>
+        <h3>Elastic-strap quilted pad</h3>
+        <p>Corner straps keep the pad fitted to your mattress with no extra setup.</p>
+      </div>
+    </div>
+    <div class="usage-row">
+      <img src="images/usage-3.jpg" alt="Close-up of the fabric texture">
+      <div>
+        <span class="num">03</span>
+        <h3>Easy-care 100% polyester</h3>
+        <p>Every piece is 100% polyester — a practical fabric built for daily use.</p>
+      </div>
+    </div>
+    <div class="usage-footer">
+      No fuss, just everyday comfort.
+      <small>Feel may vary slightly with room temperature and personal preference.</small>
+    </div>
+  </section>
+
+  <!-- COLOR OPTIONS -->
+  <section id="colors">
+    <div class="section-head">
+      <span class="kicker">COLOR OPTIONS</span>
+      <h2>Two colors to match your space.</h2>
+      <p class="sub">Choose Blue or Gray below when you order.</p>
+    </div>
+    <div class="color-grid">
+      <div class="color-card">
+        <img src="images/color-blue.jpg" alt="Blue bedding set on a bed">
+        <div class="color-name"><span class="swatch blue"></span>Blue</div>
+        <div class="color-desc">A calm blue for any room</div>
+      </div>
+      <div class="color-card">
+        <img src="images/color-gray.jpg" alt="Gray bedding set on a bed">
+        <div class="color-name"><span class="swatch gray"></span>Gray</div>
+        <div class="color-desc">A clean gray that goes with everything</div>
+      </div>
+    </div>
+    <div class="texture-row">
+      <img src="images/color-blue-texture.jpg" alt="Blue fabric texture close-up">
+      <img src="images/color-gray-texture.jpg" alt="Gray fabric texture close-up">
+    </div>
+    <div class="color-footer">
+      <p>Same set, two colors.</p>
+      <small>Reference images for color comparison — actual color may vary slightly depending on your screen and lighting.</small>
+    </div>
+  </section>
+
+  <!-- LIFESTYLE -->
+  <section class="alt" id="lifestyle">
+    <div class="section-head">
+      <span class="kicker">MADE IN KOREA</span>
+      <h2>Bedding made in Korea, for a comfortable stay.</h2>
+      <p class="sub">Everything you need for your stay, in one set.</p>
+    </div>
+    <img class="lifestyle-photo" src="images/lifestyle.jpg" alt="Bedding set styled in a studio room">
+    <div class="recommend-list">
+      <div class="recommend-item">
+        <span class="emoji">🧳</span>
+        <div>
+          <h3>A month in Korea</h3>
+          <p>Your own comfortable bed, even in an unfamiliar city.</p>
+        </div>
+      </div>
+      <div class="recommend-item">
+        <span class="emoji">📖</span>
+        <div>
+          <h3>International students</h3>
+          <p>One-time bedding setup for your dorm or studio.</p>
+        </div>
+      </div>
+      <div class="recommend-item">
+        <span class="emoji">🔑</span>
+        <div>
+          <h3>Short-term tenants</h3>
+          <p>Solid, complete bedding for however long you're staying.</p>
+        </div>
+      </div>
+    </div>
+    <div class="lifestyle-footer">
+      <p class="set-line">Comforter · Banded pad · Pillow insert · 2 pillow covers</p>
+      <h3>Start your life in Korea with Hotel Bedding.</h3>
+    </div>
+  </section>
+
+  <!-- PRODUCT INFO + CARE -->
+  <section id="product-info">
+    <div class="section-head">
+      <span class="kicker">PRODUCT INFORMATION</span>
+      <h2>Product details &amp; care guide</h2>
+      <p class="sub">Please check the composition and washing instructions before you order.</p>
+    </div>
+    <table class="info-table">
+      <tr><td class="label">Brand</td><td class="value">Hotel Bedding</td></tr>
+      <tr><td class="label">Product</td><td class="value">Four-Season All-in-One Bedding Set</td></tr>
+      <tr><td class="label">Set includes</td><td class="value">Comforter ×1 · Banded quilted pad ×1<br>Pillow insert ×1 · Pillow covers ×2 (5 pieces total)</td></tr>
+      <tr><td class="label">Size</td><td class="value">Super Single (SS)</td></tr>
+      <tr><td class="label">Fabric</td><td class="value">100% Polyester (all pieces)</td></tr>
+      <tr><td class="label">Filling</td><td class="value">Standard fiber fill</td></tr>
+      <tr><td class="label">Color</td><td class="value">Blue / Gray</td></tr>
+      <tr><td class="label">Made in</td><td class="value">Korea</td></tr>
+    </table>
+
+    <div class="section-head" style="margin-top:30px;">
+      <span class="kicker">WASH &amp; CARE</span>
+      <h2 style="font-size:20px;">Washing &amp; care instructions</h2>
+    </div>
+    <div class="care-tags">
+      <span>Below 30°C</span><span>Neutral detergent</span><span>Wash separately</span>
+    </div>
+    <ol class="care-list">
+      <li>Wash separately to prevent color transfer.</li>
+      <li>Hand-wash in cold water (below 30°C) with a neutral detergent.</li>
+      <li>If machine washing, use the wool/delicate cycle in a wash bag — watch for snagging.</li>
+      <li>Do not tumble dry.</li>
+      <li>Do not use bleach.</li>
+      <li>Dry in a shaded, well-ventilated area.</li>
+    </ol>
+    <div class="care-note">
+      Actual colors may differ slightly from your screen depending on your display and lighting. Pattern placement may vary slightly between pieces.
+    </div>
+  </section>
+
+  <!-- ORDER -->
+  <section class="alt" id="order">
+    <div class="section-head">
+      <h2>Your order</h2>
+      <p class="sub">Choose your color and quantities, then enter your delivery details.</p>
+    </div>
+
+    <div class="order-card">
+      <span class="field-label">Color</span>
+      <div class="color-select" role="group" aria-label="Color">
+        <button type="button" class="color-opt" data-color="Blue" aria-pressed="true">
+          <span class="dot swatch blue"></span>Blue
+        </button>
+        <button type="button" class="color-opt" data-color="Gray" aria-pressed="false">
+          <span class="dot swatch gray"></span>Gray
+        </button>
+      </div>
+
+      <div class="line-item">
+        <div class="item-info">
+          <h3>Bedding Set (5PCS)</h3>
+          <p>Comforter, pad, pillow insert, 2 covers</p>
+          <p class="item-price" id="price-set-label">$40</p>
+        </div>
+        <div class="stepper" data-item="set" data-min="1">
+          <button type="button" class="minus" aria-label="Decrease bedding set quantity">−</button>
+          <span class="qty" data-qty="set">1</span>
+          <button type="button" class="plus" aria-label="Increase bedding set quantity">+</button>
+        </div>
+      </div>
+
+      <div class="line-item">
+        <div class="item-info">
+          <h3>Body Towel</h3>
+          <p>70 × 130cm</p>
+          <p class="item-price" id="price-body-label">$7</p>
+        </div>
+        <div class="stepper" data-item="body" data-min="0">
+          <button type="button" class="minus" aria-label="Decrease body towel quantity">−</button>
+          <span class="qty" data-qty="body">0</span>
+          <button type="button" class="plus" aria-label="Increase body towel quantity">+</button>
+        </div>
+      </div>
+
+      <div class="line-item">
+        <div class="item-info">
+          <h3>Face Towel</h3>
+          <p>40 × 80cm</p>
+          <p class="item-price" id="price-face-label">$3</p>
+        </div>
+        <div class="stepper" data-item="face" data-min="0">
+          <button type="button" class="minus" aria-label="Decrease face towel quantity">−</button>
+          <span class="qty" data-qty="face">0</span>
+          <button type="button" class="plus" aria-label="Increase face towel quantity">+</button>
+        </div>
+      </div>
+
+      <div class="total-row">
+        <span class="label">Total</span>
+        <span class="amount" id="total-amount">$40</span>
+      </div>
+    </div>
+
+    <div class="order-card">
+      <span class="field-label">Delivery details</span>
+      <div class="form-grid">
+        <div class="form-row">
+          <label for="f-name">Recipient name</label>
+          <input type="text" id="f-name" placeholder="Full name" autocomplete="name">
+        </div>
+        <div class="form-row">
+          <label for="f-contact">Contact (email or phone)</label>
+          <input type="text" id="f-contact" placeholder="you@example.com" autocomplete="email">
+        </div>
+        <div class="form-row">
+          <label for="f-address">Accommodation address in Korea</label>
+          <textarea id="f-address" placeholder="Building name, unit, city, postal code"></textarea>
+        </div>
+        <div class="form-row">
+          <label>Check-in date</label>
+          <div class="date-row">
+            <select id="f-month" aria-label="Check-in month"></select>
+            <select id="f-day" aria-label="Check-in day"></select>
+            <select id="f-year" aria-label="Check-in year"></select>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:11.5px;color:var(--body-text);margin-top:12px;line-height:1.5;">
+        Please order at least 1 week before check-in. We ship to arrive the day before your check-in date.
+      </p>
+    </div>
+
+    <div class="order-card" id="payment-card">
+      <span class="field-label">Payment</span>
+      <div id="paypal-button-container"></div>
+      <div id="payment-pending" class="payment-pending">
+        Payment setup is in progress — checkout will be enabled here once PayPal is connected.
+      </div>
+      <p class="error-msg" id="order-error"></p>
+    </div>
+  </section>
+
+  <footer class="site">
+    <p style="font-size:12px;color:var(--body-text);">Hotel Bedding · Made in Korea</p>
+    <button class="admin-link" id="admin-open">Host admin</button>
+  </footer>
+
+</div>
+
+<div class="checkout-bar">
+  <div class="amount" id="bar-amount">$40<small>Total</small></div>
+  <button type="button" id="bar-checkout">Go to payment</button>
+</div>
+
+<!-- Admin modal -->
+<div class="modal-backdrop" id="admin-backdrop">
+  <div class="modal">
+    <h3 id="admin-title">Host admin</h3>
+    <div id="admin-pin-view">
+      <div class="form-row">
+        <label for="admin-pin">Enter PIN</label>
+        <input type="password" id="admin-pin" inputmode="numeric" placeholder="••••">
+      </div>
+      <p class="error-msg" id="admin-pin-error">Incorrect PIN.</p>
+      <div class="modal-actions">
+        <button type="button" id="admin-cancel">Cancel</button>
+        <button type="button" class="primary" id="admin-submit">Unlock</button>
+      </div>
+    </div>
+    <div id="admin-edit-view" style="display:none;">
+      <div class="form-row">
+        <label for="admin-price-set">Bedding Set price (USD)</label>
+        <input type="number" id="admin-price-set" min="0" step="1">
+      </div>
+      <div class="form-row">
+        <label for="admin-price-body">Body Towel price (USD)</label>
+        <input type="number" id="admin-price-body" min="0" step="1">
+      </div>
+      <div class="form-row">
+        <label for="admin-price-face">Face Towel price (USD)</label>
+        <input type="number" id="admin-price-face" min="0" step="1">
+      </div>
+      <div class="modal-actions">
+        <button type="button" id="admin-close">Close</button>
+        <button type="button" class="primary" id="admin-save">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ===== Config — fill these in when ready ===== */
+  var PAYPAL_CLIENT_ID = "YOUR_SANDBOX_CLIENT_ID"; // <-- Sandbox Client ID goes here
+  var API_BASE_URL = "https://YOUR-BACKEND.onrender.com"; // <-- Render backend URL goes here
+  var ADMIN_PIN = "1234"; // <-- change this before going live
+
+  /* ===== Prices (persisted to localStorage via admin panel) ===== */
+  var DEFAULT_PRICES = { set: 40, body: 7, face: 3 };
+  var prices = loadPrices();
+
+  function loadPrices(){
+    try{
+      var raw = localStorage.getItem("hb_prices");
+      if(!raw) return Object.assign({}, DEFAULT_PRICES);
+      var parsed = JSON.parse(raw);
+      return {
+        set: Number(parsed.set) || DEFAULT_PRICES.set,
+        body: Number(parsed.body) || DEFAULT_PRICES.body,
+        face: Number(parsed.face) || DEFAULT_PRICES.face
+      };
+    }catch(e){ return Object.assign({}, DEFAULT_PRICES); }
+  }
+  function savePrices(){
+    try{ localStorage.setItem("hb_prices", JSON.stringify(prices)); }catch(e){}
+  }
+
+  /* ===== Order state ===== */
+  var qty = { set: 1, body: 0, face: 0 };
+  var color = "Blue";
+
+  function updatePriceLabels(){
+    document.getElementById("price-set-label").textContent = "$" + prices.set;
+    document.getElementById("price-body-label").textContent = "$" + prices.body;
+    document.getElementById("price-face-label").textContent = "$" + prices.face;
+  }
+
+  function computeTotal(){
+    return qty.set * prices.set + qty.body * prices.body + qty.face * prices.face;
+  }
+
+  function updateTotal(){
+    var total = computeTotal();
+    var text = "$" + total;
+    document.getElementById("total-amount").textContent = text;
+    document.getElementById("bar-amount").innerHTML = text + "<small>Total</small>";
+  }
+
+  /* ===== Steppers ===== */
+  document.querySelectorAll(".stepper").forEach(function(stepper){
+    var itemKey = stepper.getAttribute("data-item");
+    var min = Number(stepper.getAttribute("data-min")) || 0;
+    var qtyEl = stepper.querySelector(".qty");
+    var minusBtn = stepper.querySelector(".minus");
+    var plusBtn = stepper.querySelector(".plus");
+
+    function render(){ qtyEl.textContent = String(qty[itemKey]); }
+
+    minusBtn.addEventListener("click", function(){
+      if(qty[itemKey] > min){
+        qty[itemKey] -= 1;
+        render();
+        updateTotal();
+      }
+    });
+    plusBtn.addEventListener("click", function(){
+      qty[itemKey] += 1;
+      render();
+      updateTotal();
+    });
+    render();
+  });
+
+  /* ===== Color select ===== */
+  document.querySelectorAll(".color-opt").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      document.querySelectorAll(".color-opt").forEach(function(b){ b.setAttribute("aria-pressed","false"); });
+      btn.setAttribute("aria-pressed","true");
+      color = btn.getAttribute("data-color");
+    });
+  });
+
+  /* ===== Delivery date dropdowns ===== */
+  var monthSel = document.getElementById("f-month");
+  var daySel = document.getElementById("f-day");
+  var yearSel = document.getElementById("f-year");
+
+  var MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+  function fillOptions(select, items, placeholder){
+    var html = '<option value="">' + placeholder + '</option>';
+    items.forEach(function(item){
+      html += '<option value="' + item.value + '">' + item.label + '</option>';
+    });
+    select.innerHTML = html;
+  }
+
+  function populateDateSelects(){
+    fillOptions(monthSel, MONTHS.map(function(m, i){ return { value: i+1, label: m }; }), "Month");
+    var days = [];
+    for(var d=1; d<=31; d++){ days.push({ value: d, label: String(d) }); }
+    fillOptions(daySel, days, "Day");
+    var years = [];
+    var thisYear = new Date().getFullYear();
+    for(var y=thisYear; y<=thisYear+2; y++){ years.push({ value: y, label: String(y) }); }
+    fillOptions(yearSel, years, "Year");
+  }
+  populateDateSelects();
+
+  /* ===== Admin panel ===== */
+  var backdrop = document.getElementById("admin-backdrop");
+  var pinView = document.getElementById("admin-pin-view");
+  var editView = document.getElementById("admin-edit-view");
+  var pinInput = document.getElementById("admin-pin");
+  var pinError = document.getElementById("admin-pin-error");
+
+  function openAdmin(){
+    backdrop.classList.add("open");
+    pinView.style.display = "block";
+    editView.style.display = "none";
+    pinInput.value = "";
+    pinError.style.display = "none";
+    setTimeout(function(){ pinInput.focus(); }, 50);
+  }
+  function closeAdmin(){ backdrop.classList.remove("open"); }
+
+  document.getElementById("admin-open").addEventListener("click", openAdmin);
+  document.getElementById("admin-cancel").addEventListener("click", closeAdmin);
+  document.getElementById("admin-close").addEventListener("click", closeAdmin);
+  backdrop.addEventListener("click", function(e){ if(e.target === backdrop) closeAdmin(); });
+
+  document.getElementById("admin-submit").addEventListener("click", function(){
+    if(pinInput.value === ADMIN_PIN){
+      document.getElementById("admin-price-set").value = prices.set;
+      document.getElementById("admin-price-body").value = prices.body;
+      document.getElementById("admin-price-face").value = prices.face;
+      pinView.style.display = "none";
+      editView.style.display = "block";
+    } else {
+      pinError.style.display = "block";
+    }
+  });
+
+  document.getElementById("admin-save").addEventListener("click", function(){
+    var s = Number(document.getElementById("admin-price-set").value);
+    var b = Number(document.getElementById("admin-price-body").value);
+    var f = Number(document.getElementById("admin-price-face").value);
+    if(s >= 0) prices.set = s;
+    if(b >= 0) prices.body = b;
+    if(f >= 0) prices.face = f;
+    savePrices();
+    updatePriceLabels();
+    updateTotal();
+    closeAdmin();
+  });
+
+  /* ===== Init prices/total ===== */
+  updatePriceLabels();
+  updateTotal();
+
+  /* ===== Checkout bar scrolls to order + payment ===== */
+  document.getElementById("bar-checkout").addEventListener("click", function(){
+    document.getElementById("order").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  /* ===== Build the order payload sent to the backend ===== */
+  function buildOrderItems(){
+    var items = [];
+    if(qty.set > 0){
+      items.push({ id: "bedding_set", name: "Hotel Bedding Set (5PCS) — " + color, quantity: qty.set });
+    }
+    if(qty.body > 0){
+      items.push({ id: "body_towel", name: "Body Towel 70x130cm", quantity: qty.body });
+    }
+    if(qty.face > 0){
+      items.push({ id: "face_towel", name: "Face Towel 40x80cm", quantity: qty.face });
+    }
+    return items;
+  }
+
+  function getDeliveryDetails(){
+    return {
+      name: document.getElementById("f-name").value.trim(),
+      contact: document.getElementById("f-contact").value.trim(),
+      address: document.getElementById("f-address").value.trim(),
+      checkInMonth: monthSel.value,
+      checkInDay: daySel.value,
+      checkInYear: yearSel.value,
+      color: color
+    };
+  }
+
+  function showOrderError(msg){
+    var el = document.getElementById("order-error");
+    el.textContent = msg;
+    el.style.display = "block";
+  }
+
+  /* ===== PayPal Buttons — only renders once a real Client ID is set ===== */
+  function isConfigured(){
+    return PAYPAL_CLIENT_ID && PAYPAL_CLIENT_ID.indexOf("YOUR_") !== 0;
+  }
+
+  function loadPayPalSdk(callback){
+    var script = document.createElement("script");
+    script.src = "https://www.paypal.com/sdk/js?client-id=" + encodeURIComponent(PAYPAL_CLIENT_ID) + "&currency=USD&intent=capture";
+    script.onload = callback;
+    script.onerror = function(){ showOrderError("Could not load PayPal. Please refresh and try again."); };
+    document.body.appendChild(script);
+  }
+
+  function renderPayPalButtons(){
+    document.getElementById("payment-pending").style.display = "none";
+
+    window.paypal.Buttons({
+      style: { shape: "rect", color: "gold", layout: "vertical", label: "paypal" },
+
+      createOrder: function(){
+        var items = buildOrderItems();
+        if(items.length === 0){
+          showOrderError("Please add at least one item.");
+          return Promise.reject(new Error("empty_cart"));
+        }
+        var delivery = getDeliveryDetails();
+        if(!delivery.name || !delivery.contact || !delivery.address || !delivery.checkInMonth || !delivery.checkInDay || !delivery.checkInYear){
+          showOrderError("Please fill in all delivery details before checkout.");
+          return Promise.reject(new Error("missing_delivery"));
+        }
+        document.getElementById("order-error").style.display = "none";
+
+        return fetch(API_BASE_URL + "/api/orders", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ items: items, delivery: delivery })
+        })
+        .then(function(res){
+          if(!res.ok) throw new Error("create_order_failed");
+          return res.json();
+        })
+        .then(function(data){ return data.id; })
+        .catch(function(err){
+          showOrderError("Could not start checkout. Please try again.");
+          throw err;
+        });
+      },
+
+      onApprove: function(data){
+        return fetch(API_BASE_URL + "/api/orders/" + data.orderID + "/capture", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" }
+        })
+        .then(function(res){
+          if(!res.ok) throw new Error("capture_failed");
+          return res.json();
+        })
+        .then(function(){
+          document.getElementById("payment-card").innerHTML =
+            '<h3 style="font-size:15px;color:var(--ink);">Payment complete — thank you!</h3>' +
+            '<p style="font-size:12.5px;color:var(--body-text);margin-top:6px;">A confirmation has been sent to your contact. We will ship in time for your check-in date.</p>';
+        })
+        .catch(function(){
+          showOrderError("Payment could not be confirmed. Please contact us before trying again.");
+        });
+      },
+
+      onError: function(){
+        showOrderError("Something went wrong with PayPal. Please try again.");
+      }
+
+    }).render("#paypal-button-container");
+  }
+
+  if(isConfigured()){
+    loadPayPalSdk(renderPayPalButtons);
+  }
+
+})();
+</script>
+</body>
+</html>

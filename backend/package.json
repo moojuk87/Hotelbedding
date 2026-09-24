@@ -1,0 +1,16 @@
+{
+  "name": "hotel-bedding-backend",
+  "version": "1.0.0",
+  "description": "Minimal order-create / order-capture backend for the Hotel Bedding web app",
+  "main": "server.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5"
+  }
+}
