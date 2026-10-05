@@ -41,8 +41,11 @@ hotel-bedding-webapp/
    - `PAYPAL_CLIENT_SECRET` — your Sandbox Secret (**never share this with
      Claude or anyone else** — paste it directly into this Render field)
    - `PAYPAL_ENV` — `sandbox` for now
-   - `ALLOWED_ORIGIN` — your future GitHub Pages URL, e.g.
-     `https://your-username.github.io`
+   - `ALLOWED_ORIGIN` — your GitHub Pages origin, e.g.
+     `https://moojuk87.github.io` (no path after the domain)
+   - `SHEET_WEBHOOK_URL` — the Apps Script web app URL (must end with `/exec`)
+   - `SHEET_WEBHOOK_TOKEN` — the same secret token you saved in the Apps
+     Script's Script Properties (keep it private)
 6. Deploy. Once it's live, Render gives you a URL like
    `https://hotel-bedding-backend.onrender.com`. Copy it.
 7. Check it works by opening `https://<your-render-url>/api/health` in a
@@ -108,11 +111,24 @@ That URL is what you'll embed as a link on 홈스인코리아, 리브애니웨�
 3. In `index.html`, replace `PAYPAL_CLIENT_ID` with the Live Client ID.
 4. Commit and push — GitHub Pages redeploys automatically.
 
-## Known limitation to fix before launch
+## Where paid orders go
 
-Delivery details are currently only attached as a short text note on the
-PayPal order (visible in the PayPal dashboard). There's no database yet,
-so nothing is saved anywhere else. Before real launch, the `TODO` in
-`backend/server.js`'s capture route should be wired up to save each paid
-order (name, address, check-in date, color, items) somewhere durable —
-a spreadsheet, email, or small database — so 도훈님 knows what to ship.
+After a payment is captured as `COMPLETED`, the backend sends the order to a
+Google Apps Script web app, which adds one row to the order sheet and emails
+the notification addresses (`NOTIFY_EMAIL`, `NOTIFY_EMAIL_2` script
+properties). The Apps Script code is kept separately (`Code.gs`); it is not
+part of this repo.
+
+- If writing to the sheet fails, the customer still sees "Payment complete"
+  (the money is already captured) and the full order is written to the Render
+  Logs with the prefix `[order] RECOVERY`. Check the logs if a paid order is
+  missing from the sheet.
+- `https://<render-url>/api/health` shows `"sheetConfigured": true` once both
+  sheet environment variables are set.
+- Customers do not get an automatic confirmation email; only you are notified.
+
+## Before going live
+
+- Change `ADMIN_PIN` in `index.html` (the default is `1234`).
+- Keep the prices in `backend/server.js` (`PRICES`) in sync with the frontend.
+- Switch PayPal to Live (see step 5) and test with one small real payment.

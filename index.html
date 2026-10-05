@@ -827,6 +827,63 @@
     el.style.display = "block";
   }
 
+  function clearOrderError(){
+    document.getElementById("order-error").style.display = "none";
+  }
+
+  function readJson(res){
+    return res.json().catch(function(){ return {}; });
+  }
+
+  /* ===== Form checks (run BEFORE the PayPal window opens) ===== */
+  function isRealDate(y, m, d){
+    var dt = new Date(y, m - 1, d);
+    return dt.getFullYear() === y && dt.getMonth() === m - 1 && dt.getDate() === d;
+  }
+
+  // Returns the list of problems and the first field to fix. No problems = ready to pay.
+  function validateOrder(){
+    var problems = [];
+    var firstField = null;
+    function fail(label, fieldId){
+      problems.push(label);
+      if(!firstField){ firstField = document.getElementById(fieldId); }
+    }
+
+    var d = getDeliveryDetails();
+    if(buildOrderItems().length === 0){ fail("at least one item", "order"); }
+    if(!d.name){ fail("your name", "f-name"); }
+    if(!d.contact){ fail("your contact (email or phone)", "f-contact"); }
+    if(!d.address){ fail("your address in Korea", "f-address"); }
+    if(!d.checkInMonth || !d.checkInDay || !d.checkInYear){
+      fail("your check-in date (month, day and year)", "f-month");
+    } else if(!isRealDate(Number(d.checkInYear), Number(d.checkInMonth), Number(d.checkInDay))){
+      fail("a valid check-in date (that day does not exist)", "f-day");
+    }
+    return { problems: problems, firstField: firstField };
+  }
+
+  function showSuccess(orderId){
+    var card = document.getElementById("payment-card");
+    card.innerHTML = "";
+
+    var title = document.createElement("h3");
+    title.style.cssText = "font-size:15px;color:var(--ink);";
+    title.textContent = "Payment complete — thank you!";
+
+    var text = document.createElement("p");
+    text.style.cssText = "font-size:12.5px;color:var(--body-text);margin-top:6px;line-height:1.5;";
+    text.textContent = "Your order has been received. We will contact you at the details you provided, and we will ship in time for your check-in date.";
+
+    var ref = document.createElement("p");
+    ref.style.cssText = "font-size:12px;color:var(--body-text);margin-top:10px;word-break:break-all;";
+    ref.textContent = "Order number: " + orderId + " (please keep this for reference)";
+
+    card.appendChild(title);
+    card.appendChild(text);
+    card.appendChild(ref);
+  }
+
   /* ===== PayPal Buttons — only renders once a real Client ID is set ===== */
   function isConfigured(){
     // Buttons only appear once BOTH the Client ID and the backend URL are filled in
@@ -842,61 +899,76 @@
     document.body.appendChild(script);
   }
 
+  var lastValidationFailure = 0;
+
   function renderPayPalButtons(){
     document.getElementById("payment-pending").style.display = "none";
 
     window.paypal.Buttons({
       style: { shape: "rect", color: "gold", layout: "vertical", label: "paypal" },
 
-      createOrder: function(){
-        var items = buildOrderItems();
-        if(items.length === 0){
-          showOrderError("Please add at least one item.");
-          return Promise.reject(new Error("empty_cart"));
+      // Runs when a button is clicked, before any PayPal window opens.
+      onClick: function(data, actions){
+        var result = validateOrder();
+        if(result.problems.length > 0){
+          lastValidationFailure = Date.now();
+          showOrderError("Please provide: " + result.problems.join(", ") + ".");
+          if(result.firstField){
+            if(result.firstField.focus){ result.firstField.focus({ preventScroll: true }); }
+            result.firstField.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+          return actions.reject();
         }
-        var delivery = getDeliveryDetails();
-        if(!delivery.name || !delivery.contact || !delivery.address || !delivery.checkInMonth || !delivery.checkInDay || !delivery.checkInYear){
-          showOrderError("Please fill in all delivery details before checkout.");
-          return Promise.reject(new Error("missing_delivery"));
-        }
-        document.getElementById("order-error").style.display = "none";
+        clearOrderError();
+        return actions.resolve();
+      },
 
+      createOrder: function(){
         return fetch(API_BASE_URL + "/api/orders", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ items: items, delivery: delivery })
+          body: JSON.stringify({ items: buildOrderItems(), delivery: getDeliveryDetails() })
         })
         .then(function(res){
-          if(!res.ok) throw new Error("create_order_failed");
-          return res.json();
+          return readJson(res).then(function(body){
+            if(!res.ok){
+              var err = new Error("create_order_failed");
+              err.userMessage = (res.status === 400 && body.error) ? body.error : "";
+              throw err;
+            }
+            return body;
+          });
         })
-        .then(function(data){ return data.id; })
+        .then(function(body){ return body.id; })
         .catch(function(err){
-          showOrderError("Could not start checkout. Please try again.");
+          showOrderError(err.userMessage ? "Could not start checkout: " + err.userMessage : "Could not start checkout. Please try again.");
           throw err;
         });
       },
 
       onApprove: function(data){
-        return fetch(API_BASE_URL + "/api/orders/" + data.orderID + "/capture", {
+        return fetch(API_BASE_URL + "/api/orders/" + encodeURIComponent(data.orderID) + "/capture", {
           method: "POST",
-          headers: { "Content-Type": "application/json" }
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ items: buildOrderItems(), delivery: getDeliveryDetails() })
         })
         .then(function(res){
-          if(!res.ok) throw new Error("capture_failed");
-          return res.json();
+          return readJson(res).then(function(body){
+            if(!res.ok || body.status !== "COMPLETED"){ throw new Error("capture_failed"); }
+            return body;
+          });
         })
-        .then(function(){
-          document.getElementById("payment-card").innerHTML =
-            '<h3 style="font-size:15px;color:var(--ink);">Payment complete — thank you!</h3>' +
-            '<p style="font-size:12.5px;color:var(--body-text);margin-top:6px;">A confirmation has been sent to your contact. We will ship in time for your check-in date.</p>';
+        .then(function(body){
+          showSuccess(body.id || data.orderID);
         })
         .catch(function(){
-          showOrderError("Payment could not be confirmed. Please contact us before trying again.");
+          showOrderError("Payment could not be confirmed. Please do not pay again — contact us first and mention reference " + data.orderID + ".");
         });
       },
 
       onError: function(){
+        // Keep the "please provide..." message visible if it was just shown.
+        if(Date.now() - lastValidationFailure < 2000){ return; }
         showOrderError("Something went wrong with PayPal. Please try again.");
       }
 
