@@ -632,8 +632,8 @@
   "use strict";
 
   /* ===== Config — fill these in when ready ===== */
-  var PAYPAL_CLIENT_ID = "YOUR_SANDBOX_CLIENT_ID"; // <-- Sandbox Client ID goes here
-  var API_BASE_URL = "https://YOUR-BACKEND.onrender.com"; // <-- Render backend URL goes here
+  var PAYPAL_CLIENT_ID = "BAAa6Da4JI0XND0MrsCU_qNbOosZ_lPkY6bcv6kwO-lBuTQ4YQQSkxpvzqpaLhuaKPWEsKRhpLrU1L7fDM"; // Sandbox Client ID
+  var API_BASE_URL = "https://hotelbedding.onrender.com"; // Render backend URL
   var ADMIN_PIN = "1234"; // <-- change this before going live
 
   /* ===== Prices (persisted to localStorage via admin panel) ===== */
@@ -829,7 +829,9 @@
 
   /* ===== PayPal Buttons — only renders once a real Client ID is set ===== */
   function isConfigured(){
-    return PAYPAL_CLIENT_ID && PAYPAL_CLIENT_ID.indexOf("YOUR_") !== 0;
+    // Buttons only appear once BOTH the Client ID and the backend URL are filled in
+    return PAYPAL_CLIENT_ID && PAYPAL_CLIENT_ID.indexOf("YOUR_") !== 0 &&
+           API_BASE_URL && API_BASE_URL.indexOf("YOUR-BACKEND") === -1;
   }
 
   function loadPayPalSdk(callback){
