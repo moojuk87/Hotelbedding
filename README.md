@@ -61,11 +61,14 @@ var PAYPAL_CLIENT_ID = "YOUR_SANDBOX_CLIENT_ID"; // <- paste your Sandbox Client
 var API_BASE_URL = "https://YOUR-BACKEND.onrender.com"; // <- paste your Render URL (no trailing slash)
 ```
 
-Also change the admin PIN before going live:
+Prices are shown from this line in the same `<script>` block:
 
 ```js
-var ADMIN_PIN = "1234"; // <- change this
+var prices = { set: 40, body: 7, face: 3 };
 ```
+
+The amount actually charged comes from `PRICES` in `backend/server.js`. When
+you change a price, change **both** files and push.
 
 ## 3. Push to GitHub and deploy the frontend with GitHub Pages
 
@@ -114,7 +117,8 @@ That URL is what you'll embed as a link on 홈스인코리아, 리브애니웨�
 ## Where paid orders go
 
 After a payment is captured as `COMPLETED`, the backend sends the order to a
-Google Apps Script web app, which adds one row to the order sheet and emails
+Google Apps Script web app, which adds one row to the order sheet (order
+number and PayPal transaction ID included) and emails
 the notification addresses (`NOTIFY_EMAIL`, `NOTIFY_EMAIL_2` script
 properties). The Apps Script code is kept separately (`Code.gs`); it is not
 part of this repo.
@@ -129,6 +133,7 @@ part of this repo.
 
 ## Before going live
 
-- Change `ADMIN_PIN` in `index.html` (the default is `1234`).
-- Keep the prices in `backend/server.js` (`PRICES`) in sync with the frontend.
+- Prices live in two places: `prices` in `index.html` (what customers see) and
+  `PRICES` in `backend/server.js` (what is charged). Keep them identical.
+- Clear the test rows from the order sheet (keep only the header row).
 - Switch PayPal to Live (see step 5) and test with one small real payment.

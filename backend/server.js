@@ -330,7 +330,9 @@ app.post("/api/orders/:orderID/capture", async (req, res) => {
       ppData.purchase_units[0].payments.captures &&
       ppData.purchase_units[0].payments.captures[0];
     const paidAmount = capture && capture.amount ? capture.amount.value : "";
-    console.log(`[order] captured ${orderID} amount=${paidAmount}`);
+    // The capture ID is the payment's own ID (compare it with the "transaction ID" in PayPal).
+    const transactionId = capture && capture.id ? capture.id : "";
+    console.log(`[order] captured ${orderID} txn=${transactionId} amount=${paidAmount}`);
 
     // Prefer the details saved when the order was created. If the server restarted
     // in between, fall back to what the browser sent with the capture request.
@@ -363,7 +365,7 @@ app.post("/api/orders/:orderID/capture", async (req, res) => {
       console.warn(`[order] ${orderID} amount mismatch: paid=${paidAmount} expected=${expected.toFixed(2)}`);
     }
 
-    const order = { orderId: orderID, amount: paidAmount, ...details };
+    const order = { orderId: orderID, transactionId, amount: paidAmount, ...details };
     const recorded = await recordOrder(order);
     pendingOrders.delete(orderID);
 

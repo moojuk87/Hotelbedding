@@ -223,7 +223,29 @@
     margin-top:16px;text-align:center;padding:14px;border-radius:10px;
     background:var(--gold-soft);color:var(--ink);font-size:12.5px;line-height:1.5;
   }
-  .error-msg{color:var(--danger);font-size:12.5px;margin-top:10px;display:none;}
+  /* Alert banner: stays at the top of the screen so it is seen wherever the page is scrolled */
+  .error-msg{
+    display:none;position:fixed;z-index:80;
+    top:calc(var(--safe-top) + 12px);left:12px;right:12px;max-width:456px;margin:0 auto;
+    background:#B3261E;color:#fff;font-size:16px;font-weight:700;line-height:1.45;
+    padding:14px 16px;border-radius:12px;cursor:pointer;
+    box-shadow:0 6px 20px rgba(0,0,0,.35);
+  }
+  .error-msg::before{content:"\26A0\FE0E  ";}
+  .error-msg::after{content:"Tap to close";display:block;margin-top:6px;font-size:11.5px;font-weight:400;opacity:.85;}
+  /* Shakes once and pulses three times to catch the eye, then stays still */
+  .error-msg.flash{animation:alert-shake .5s ease 1, alert-glow 1s ease 3;}
+  @keyframes alert-shake{
+    0%,100%{transform:translateX(0);}
+    15%{transform:translateX(-8px);} 30%{transform:translateX(8px);}
+    45%{transform:translateX(-6px);} 60%{transform:translateX(6px);}
+    75%{transform:translateX(-3px);} 90%{transform:translateX(3px);}
+  }
+  @keyframes alert-glow{
+    0%,100%{box-shadow:0 6px 20px rgba(0,0,0,.35),0 0 0 0 rgba(179,38,30,.75);}
+    50%{box-shadow:0 6px 20px rgba(0,0,0,.35),0 0 0 12px rgba(179,38,30,0);}
+  }
+  @media (prefers-reduced-motion: reduce){ .error-msg.flash{animation:none;} }
 
   /* sticky checkout bar */
   .checkout-bar{
@@ -242,26 +264,6 @@
   .checkout-bar button:active{background:var(--navy-dark);}
 
   footer.site{padding:30px 20px 20px;text-align:center;}
-  .admin-link{font-size:11px;color:var(--body-text);background:none;border:none;text-decoration:underline;cursor:pointer;font-family:inherit;}
-
-  /* admin modal */
-  .modal-backdrop{
-    position:fixed;inset:0;background:rgba(20,20,20,.5);z-index:60;
-    display:none;align-items:flex-end;justify-content:center;
-  }
-  .modal-backdrop.open{display:flex;}
-  .modal{
-    background:var(--card);width:100%;max-width:480px;border-radius:16px 16px 0 0;
-    padding:22px 20px calc(22px + var(--safe-bottom));max-height:80vh;overflow-y:auto;
-  }
-  .modal h3{font-size:17px;margin-bottom:14px;}
-  .modal .form-row{margin-bottom:10px;}
-  .modal-actions{display:flex;gap:10px;margin-top:16px;}
-  .modal-actions button{
-    flex:1;padding:12px;border-radius:9px;border:1px solid var(--line);
-    background:var(--cream);font-family:inherit;font-size:13.5px;font-weight:600;cursor:pointer;color:var(--ink);
-  }
-  .modal-actions button.primary{background:var(--navy);color:#fff;border-color:var(--navy);}
 </style>
 </head>
 <body>
@@ -575,13 +577,11 @@
       <div id="payment-pending" class="payment-pending">
         Payment setup is in progress — checkout will be enabled here once PayPal is connected.
       </div>
-      <p class="error-msg" id="order-error"></p>
     </div>
   </section>
 
   <footer class="site">
     <p style="font-size:12px;color:var(--body-text);">Hotel Bedding · Made in Korea</p>
-    <button class="admin-link" id="admin-open">Host admin</button>
   </footer>
 
 </div>
@@ -591,41 +591,7 @@
   <button type="button" id="bar-checkout">Go to payment</button>
 </div>
 
-<!-- Admin modal -->
-<div class="modal-backdrop" id="admin-backdrop">
-  <div class="modal">
-    <h3 id="admin-title">Host admin</h3>
-    <div id="admin-pin-view">
-      <div class="form-row">
-        <label for="admin-pin">Enter PIN</label>
-        <input type="password" id="admin-pin" inputmode="numeric" placeholder="••••">
-      </div>
-      <p class="error-msg" id="admin-pin-error">Incorrect PIN.</p>
-      <div class="modal-actions">
-        <button type="button" id="admin-cancel">Cancel</button>
-        <button type="button" class="primary" id="admin-submit">Unlock</button>
-      </div>
-    </div>
-    <div id="admin-edit-view" style="display:none;">
-      <div class="form-row">
-        <label for="admin-price-set">Bedding Set price (USD)</label>
-        <input type="number" id="admin-price-set" min="0" step="1">
-      </div>
-      <div class="form-row">
-        <label for="admin-price-body">Body Towel price (USD)</label>
-        <input type="number" id="admin-price-body" min="0" step="1">
-      </div>
-      <div class="form-row">
-        <label for="admin-price-face">Face Towel price (USD)</label>
-        <input type="number" id="admin-price-face" min="0" step="1">
-      </div>
-      <div class="modal-actions">
-        <button type="button" id="admin-close">Close</button>
-        <button type="button" class="primary" id="admin-save">Save</button>
-      </div>
-    </div>
-  </div>
-</div>
+<div class="error-msg" id="order-error" role="alert" aria-live="assertive"></div>
 
 <script>
 (function(){
@@ -634,27 +600,11 @@
   /* ===== Config — fill these in when ready ===== */
   var PAYPAL_CLIENT_ID = "BAAa6Da4JI0XND0MrsCU_qNbOosZ_lPkY6bcv6kwO-lBuTQ4YQQSkxpvzqpaLhuaKPWEsKRhpLrU1L7fDM"; // Sandbox Client ID
   var API_BASE_URL = "https://hotelbedding.onrender.com"; // Render backend URL
-  var ADMIN_PIN = "1234"; // <-- change this before going live
 
-  /* ===== Prices (persisted to localStorage via admin panel) ===== */
-  var DEFAULT_PRICES = { set: 40, body: 7, face: 3 };
-  var prices = loadPrices();
-
-  function loadPrices(){
-    try{
-      var raw = localStorage.getItem("hb_prices");
-      if(!raw) return Object.assign({}, DEFAULT_PRICES);
-      var parsed = JSON.parse(raw);
-      return {
-        set: Number(parsed.set) || DEFAULT_PRICES.set,
-        body: Number(parsed.body) || DEFAULT_PRICES.body,
-        face: Number(parsed.face) || DEFAULT_PRICES.face
-      };
-    }catch(e){ return Object.assign({}, DEFAULT_PRICES); }
-  }
-  function savePrices(){
-    try{ localStorage.setItem("hb_prices", JSON.stringify(prices)); }catch(e){}
-  }
+  /* ===== Prices (USD) =====
+     Shown on the page only. The amount actually charged comes from the PRICES
+     table in backend/server.js — when you change a price, change BOTH places. */
+  var prices = { set: 40, body: 7, face: 3 };
 
   /* ===== Order state ===== */
   var qty = { set: 1, body: 0, face: 0 };
@@ -738,53 +688,6 @@
   }
   populateDateSelects();
 
-  /* ===== Admin panel ===== */
-  var backdrop = document.getElementById("admin-backdrop");
-  var pinView = document.getElementById("admin-pin-view");
-  var editView = document.getElementById("admin-edit-view");
-  var pinInput = document.getElementById("admin-pin");
-  var pinError = document.getElementById("admin-pin-error");
-
-  function openAdmin(){
-    backdrop.classList.add("open");
-    pinView.style.display = "block";
-    editView.style.display = "none";
-    pinInput.value = "";
-    pinError.style.display = "none";
-    setTimeout(function(){ pinInput.focus(); }, 50);
-  }
-  function closeAdmin(){ backdrop.classList.remove("open"); }
-
-  document.getElementById("admin-open").addEventListener("click", openAdmin);
-  document.getElementById("admin-cancel").addEventListener("click", closeAdmin);
-  document.getElementById("admin-close").addEventListener("click", closeAdmin);
-  backdrop.addEventListener("click", function(e){ if(e.target === backdrop) closeAdmin(); });
-
-  document.getElementById("admin-submit").addEventListener("click", function(){
-    if(pinInput.value === ADMIN_PIN){
-      document.getElementById("admin-price-set").value = prices.set;
-      document.getElementById("admin-price-body").value = prices.body;
-      document.getElementById("admin-price-face").value = prices.face;
-      pinView.style.display = "none";
-      editView.style.display = "block";
-    } else {
-      pinError.style.display = "block";
-    }
-  });
-
-  document.getElementById("admin-save").addEventListener("click", function(){
-    var s = Number(document.getElementById("admin-price-set").value);
-    var b = Number(document.getElementById("admin-price-body").value);
-    var f = Number(document.getElementById("admin-price-face").value);
-    if(s >= 0) prices.set = s;
-    if(b >= 0) prices.body = b;
-    if(f >= 0) prices.face = f;
-    savePrices();
-    updatePriceLabels();
-    updateTotal();
-    closeAdmin();
-  });
-
   /* ===== Init prices/total ===== */
   updatePriceLabels();
   updateTotal();
@@ -821,15 +724,28 @@
     };
   }
 
-  function showOrderError(msg){
+  var errorTimer = null;
+
+  // autoHideMs is optional: form mistakes fade away on their own, payment problems stay until closed.
+  function showOrderError(msg, autoHideMs){
     var el = document.getElementById("order-error");
     el.textContent = msg;
     el.style.display = "block";
+    el.classList.remove("flash");
+    void el.offsetWidth;            // restart the attention animation
+    el.classList.add("flash");
+    clearTimeout(errorTimer);
+    if(autoHideMs){ errorTimer = setTimeout(clearOrderError, autoHideMs); }
   }
 
   function clearOrderError(){
-    document.getElementById("order-error").style.display = "none";
+    var el = document.getElementById("order-error");
+    clearTimeout(errorTimer);
+    el.style.display = "none";
+    el.classList.remove("flash");
   }
+
+  document.getElementById("order-error").addEventListener("click", clearOrderError);
 
   function readJson(res){
     return res.json().catch(function(){ return {}; });
@@ -912,7 +828,7 @@
         var result = validateOrder();
         if(result.problems.length > 0){
           lastValidationFailure = Date.now();
-          showOrderError("Please provide: " + result.problems.join(", ") + ".");
+          showOrderError("Please provide: " + result.problems.join(", ") + ".", 8000);
           if(result.firstField){
             if(result.firstField.focus){ result.firstField.focus({ preventScroll: true }); }
             result.firstField.scrollIntoView({ behavior: "smooth", block: "center" });
