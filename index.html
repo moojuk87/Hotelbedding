@@ -223,6 +223,10 @@
     margin-top:16px;text-align:center;padding:14px;border-radius:10px;
     background:var(--gold-soft);color:var(--ink);font-size:12.5px;line-height:1.5;
   }
+  .pay-notice{
+    margin:0 0 14px;padding:10px 12px;border-radius:10px;
+    background:var(--gold-soft);color:var(--ink);font-size:12.5px;line-height:1.5;
+  }
   /* Alert banner: stays at the top of the screen so it is seen wherever the page is scrolled */
   .error-msg{
     display:none;position:fixed;z-index:80;
@@ -573,6 +577,7 @@
 
     <div class="order-card" id="payment-card">
       <span class="field-label">Payment</span>
+      <p class="pay-notice"><strong>Please note:</strong> under PayPal's policy, PayPal accounts registered in Korea cannot be used to pay here. Please use a PayPal account registered outside Korea.</p>
       <div id="paypal-button-container"></div>
       <div id="payment-pending" class="payment-pending">
         Payment setup is in progress — checkout will be enabled here once PayPal is connected.
