@@ -268,6 +268,22 @@
   .checkout-bar button:active{background:var(--navy-dark);}
 
   footer.site{padding:30px 20px 20px;text-align:center;}
+
+  /* Korean-customer notice (KakaoTalk open chat) */
+  .kr-notice{
+    margin:0 0 26px;padding:20px 18px;border-radius:var(--radius);
+    background:var(--gold-soft);text-align:center;
+  }
+  .kr-notice p{font-size:13px;line-height:1.6;color:var(--ink);}
+  .kr-notice .en{margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:12.5px;color:var(--body-text);}
+  .kakao-btn{
+    display:inline-block;margin-top:16px;padding:13px 22px;border-radius:99px;
+    background:#FEE500;color:#191919;font-size:14px;font-weight:700;
+    text-decoration:none;font-family:inherit;line-height:1.3;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .kakao-btn:active{opacity:.85;}
+  .kakao-btn small{display:block;font-size:11.5px;font-weight:500;margin-top:2px;}
 </style>
 </head>
 <body>
@@ -586,6 +602,14 @@
   </section>
 
   <footer class="site">
+    <div class="kr-notice" id="kr-notice">
+      <p lang="ko">이 서비스는 외국인 게스트를 대상으로 합니다.<br>한국인은 PayPal로 결제할 수 없습니다.<br>구매를 원하시면 아래 카카오톡 오픈채팅방으로 들어와 주문해 주세요.</p>
+      <p class="en" lang="en">This service is for international guests. PayPal payment is not available for Korean residents. If you'd like to purchase, please join our KakaoTalk open chat below and place your order there.</p>
+      <a class="kakao-btn" href="https://open.kakao.com/o/giTHlNQi" target="_blank" rel="noopener noreferrer">
+        <span lang="ko">카카오톡 오픈채팅방 바로가기</span>
+        <small lang="en">Join KakaoTalk Open Chat</small>
+      </a>
+    </div>
     <p style="font-size:12px;color:var(--body-text);">Hotel Bedding · Made in Korea</p>
   </footer>
 
